@@ -1,0 +1,5 @@
+/* Forzar tamaño grande a los iconos SVG de los toast de Sonner */
+.toaster svg {
+  width: 1.5rem !important;
+  height: 1.5rem !important;
+}
