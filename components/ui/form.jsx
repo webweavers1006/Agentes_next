@@ -15,9 +15,25 @@ const FormField = (
     ...props
   }
 ) => {
+  // Normalize render prop: react-hook-form's Controller expects a function
+  // in `render`. Allow callers to pass either `render` or a function child.
+  const controllerProps = { ...props };
+
+  if (typeof controllerProps.render !== "function") {
+    if (typeof controllerProps.children === "function") {
+      controllerProps.render = controllerProps.children;
+      delete controllerProps.children;
+    } else {
+      // If children is not a function, wrap it so Controller always gets a function
+      const staticChildren = controllerProps.children;
+      controllerProps.render = () => staticChildren ?? null;
+      delete controllerProps.children;
+    }
+  }
+
   return (
     <FormFieldContext.Provider value={{ name: props.name }}>
-      <Controller {...props} />
+      <Controller {...controllerProps} />
     </FormFieldContext.Provider>
   );
 }

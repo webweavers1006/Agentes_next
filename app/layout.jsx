@@ -1,6 +1,5 @@
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
-import "../css/sonner-custom.css";
 import { Toaster } from "@/components/ui/sonner"
 
 const geistSans = Geist({
@@ -22,7 +21,7 @@ export default function LoginLayout({ children }) {
   return (
     <html lang="en">
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased dark`}
+        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
         <div className="">
           <div className="flex flex-col gap-4">{children}</div>

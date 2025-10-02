@@ -7,6 +7,19 @@ function Input({
   type,
   ...props
 }) {
+  // For text-like inputs we want to avoid uncontrolled -> controlled warnings
+  // by ensuring `value` is never `undefined`. For inputs that use `checked`
+  // (checkbox/radio) or file inputs we should not override the prop.
+  const skipValue = ["checkbox", "radio", "file"].includes(type);
+
+  // Create finalProps from incoming props but ensure value is defined
+  const finalProps = { ...props };
+  if (!skipValue) {
+    if (finalProps.value === undefined) {
+      finalProps.value = "";
+    }
+  }
+
   return (
     <input
       type={type}
@@ -17,7 +30,7 @@ function Input({
         "aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 aria-invalid:border-destructive",
         className
       )}
-      {...props} />
+      {...finalProps} />
   );
 }
 
